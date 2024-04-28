@@ -1,0 +1,1 @@
+This is a project we created for our Blockchain class at UniBuc FMI.
