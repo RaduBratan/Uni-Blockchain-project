@@ -1,0 +1,27 @@
+{
+  "name": "Uni-Blockchain-project",
+  "version": "1.0.0",
+  "description": "A blockchain-based voting system using Ethereum, Truffle, and React.",
+  "main": "truffle-config.js",
+  "scripts": {
+    "start": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "test": "truffle test",
+    "migrate": "truffle migrate",
+    "compile": "truffle compile"
+  },
+  "author": "Radu Bratan",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ethers": "5.6.8",
+    "ganache-cli": "6.12.2",
+    "solc": "0.8.0",
+    "truffle": "5.4.0",
+    "web3": "1.4.0"
+  },
+  "devDependencies": {
+    "@truffle/hdwallet-provider": "1.4.0",
+    "chai": "4.3.4",
+    "mocha": "9.0.3"
+  }
+}
