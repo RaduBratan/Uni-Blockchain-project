@@ -23,6 +23,22 @@ contract VotingSystem {
 
     constructor() {
         owner = msg.sender;
+        string[11] memory candidateNames = [
+            "Balenciaga",
+            "Fendi",
+            "Rick Owens",
+            "Maison Margiela",
+            "Comme des Gar\u00E7ons",
+            "Loro Piana",
+            "Brunello Cucinelli",
+            "Corneliani",
+            "Cesare Attolini",
+            "Ermenegildo Zegna",
+            "Berluti"
+        ];
+        for (uint i = 0; i < candidateNames.length; i++) {
+            addCandidate(candidateNames[i]);
+        }
     }
 
     function addCandidate(string memory name) public onlyOwner {
