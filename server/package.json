@@ -1,7 +1,6 @@
 {
-  "name": "Uni-Blockchain-project",
+  "name": "server",
   "version": "1.0.0",
-  "description": "A blockchain-based voting system using Ethereum, Truffle, and React.",
   "main": "truffle-config.js",
   "scripts": {
     "start": "cd client && npm start",
@@ -13,7 +12,7 @@
     "copy-contracts": "copyfiles -u 1 server/build/contracts/*.json /client/src/contracts",
     "watch-contracts": "chokidar 'server/build/contracts/*.json' -c 'npm run copy-contracts'"
   },
-  "author": "Radu Bratan",
+  "author": "Radu Bratan, Anca Sorana",
   "dependencies": {
     "dotenv": "^16.4.5",
     "ethers": "^5.6.8",
