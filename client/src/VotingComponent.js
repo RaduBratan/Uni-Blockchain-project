@@ -55,7 +55,8 @@ const VotingComponent = () => {
 
   const vote = async () => {
     try {
-      await votingSystem.methods.vote(selectedCandidateId).send({ from: account });
+      const gasPrice = await votingSystem.methods.vote(selectedCandidateId).estimateGas({ from: account });
+      await votingSystem.methods.vote(selectedCandidateId).send({ from: account, gasPrice });
       alert('Vote cast successfully!');
     } catch (error) {
       alert('Failed to cast vote.');
