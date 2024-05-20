@@ -48,4 +48,9 @@ contract VotingSystem {
         require(candidateId > 0 && candidateId <= candidatesCount, "Invalid candidate ID");
         return candidates[candidateId];
     }
+
+    function getCandidatesCount() public view returns (uint) {
+        return candidatesCount;
+    }   
+
 }

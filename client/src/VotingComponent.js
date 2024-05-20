@@ -1,40 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import Web3 from 'web3';
-import getVotingSystemInstance from './VotingSystem';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from './AppContext';
+import getWeb3 from './getWeb3';
+import getVotingSystemInstance from './getVotingSystemInstance';
+import VotingSystem from './contracts/VotingSystem.json';
 
 const VotingComponent = () => {
+  const { account } = useContext(AppContext);
   const [candidates, setCandidates] = useState([]);
-  const [selectedCandidateId, setSelectedCandidateId] = useState('');
-  const [account, setAccount] = useState(null);
+  const [newCandidateName, setNewCandidateName] = useState('');
   const [votingSystem, setVotingSystem] = useState(null);
-
+  const [web3, setWeb3] = useState(null);
+  const [selectedCandidateId, setSelectedCandidateId] = useState('');
+  
   useEffect(() => {
     const init = async () => {
-      if (typeof window.ethereum === 'undefined') {
-        alert('Please install MetaMask to use this application.');
-        return;
-      }
-
       try {
-        const web3 = new Web3(window.ethereum);
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-        setAccount(accounts[0]);
+        const web3 = await getWeb3();
+        setWeb3(web3);
+        console.log('Web3 initialized.');
 
-        const votingSystemInstance = await getVotingSystemInstance();
-        setVotingSystem(votingSystemInstance);
+        const networkId = await web3.eth.net.getId();
+        const deployedNetwork = VotingSystem.networks[networkId];
+        console.log('Network ID:', networkId);
+        if (!deployedNetwork) {
+          throw new Error("VotingSystem contract not found on the current network.");
+        }
 
-        loadCandidates(votingSystemInstance);
+        const instance = new web3.eth.Contract(
+          VotingSystem.abi,
+          deployedNetwork.address,
+        );
+
+        setVotingSystem(instance);
+        console.log('Contract instance created:', instance);
+        if (instance) {
+          loadCandidates(instance); // Load candidates once the contract is ready
+        }
       } catch (error) {
         alert('Failed to load web3, accounts, or contract. Check console for details.');
-        console.error(error);
+        console.error('Error:', error);
       }
     };
 
     init();
-
-    window.ethereum.on('accountsChanged', function(accounts) {
-      setAccount(accounts[0]);
-    });
+    
   }, []);
 
   const loadCandidates = async (votingSystemInstance) => {
@@ -53,28 +62,65 @@ const VotingComponent = () => {
     }
   };
 
-  const vote = async () => {
+  const addCandidate = async (name) => {
+    if (!votingSystem || !account) {
+      console.error('Contract instance or account not available.');
+      return;
+    }
+
     try {
-      const gasPrice = await votingSystem.methods.vote(selectedCandidateId).estimateGas({ from: account });
-      await votingSystem.methods.vote(selectedCandidateId).send({ from: account, gasPrice });
-      alert('Vote cast successfully!');
+      await votingSystem.methods.addCandidate(name).send({
+        from: account,
+        gasLimit: web3.utils.toHex(2100000), // Adjust based on your contract's needs
+        gasPrice: web3.utils.toHex(web3.utils.toWei('0.00001', 'gwei')) // Set a very low gas price
+      });    
+      console.log('Candidate added successfully!');
+      setNewCandidateName(''); // Clear the candidate input field after successful addition
+      loadCandidates(votingSystem); // Reload candidates to show the newly added candidate
     } catch (error) {
-      alert('Failed to cast vote.');
-      console.error(error);
+      console.error('Add candidate error:', error);
     }
   };
 
+  const vote = async (candidateId) => {
+    if (!votingSystem || !account) {
+      console.error('Contract instance or account not available.');
+      return;
+    }
+  
+    try {
+      await votingSystem.methods.vote(candidateId).send({
+        from: account,
+        gasLimit: web3.utils.toHex(300000), // Adjust the gas limit as needed
+        gasPrice: web3.utils.toHex(web3.utils.toWei('0.00001', 'gwei')) // Adjust the gas price as needed
+      });
+      console.log('Vote cast successfully!');
+      loadCandidates(votingSystem); // Reload candidates to refresh any state change
+    } catch (error) {
+      console.error('Voting error:', error);
+    }
+  };
+  
+
   return (
     <div>
-      <h1>Vote for Your Candidate</h1>
+      <h1>Candidates List</h1>
       <select value={selectedCandidateId} onChange={e => setSelectedCandidateId(e.target.value)}>
         {candidates.map(candidate => (
-          <option key={candidate.id} value={candidate.id}>
-            {candidate.name}
-          </option>
-        ))}
+           <option key={candidate.id} value={candidate.id}>
+             {candidate.name}
+           </option>
+         ))}
       </select>
-      <button onClick={vote}>Vote</button>
+      <button onClick={() => vote(selectedCandidateId)} disabled={!votingSystem}>Vote</button> {/* Vote button */}
+      <h1>Add a New Candidate</h1>
+      <input 
+        type="text"
+        value={newCandidateName}
+        onChange={e => setNewCandidateName(e.target.value)}
+        placeholder="Candidate Name"
+      />
+      <button onClick={() => addCandidate(newCandidateName)} disabled={!votingSystem}>Add Candidate</button>
     </div>
   );
 };
