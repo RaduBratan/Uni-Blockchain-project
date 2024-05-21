@@ -37,10 +37,7 @@ This is a project we created for our Blockchain class at UniBuc FMI.
 6. ilustrarea interacțiunii dintre smart contracte:
    - contractul `VotingHelper` interacționează cu `VotingSystem` pentru a obține numărul de voturi pentru un candidat
 7. deploy pe o rețea locală sau pe o rețea de test Ethereum:
-   - am configurat `truffle-config.js` pentru deploy pe rețeaua locală și pe Ropsten
-
-<br/>
-
+   - am configurat `truffle-config.js` pentru deploy pe rețeaua locală și pe Ropsten <br/>
 #### Cerințe opționale:
 1. utilizare librării:
    - lipsește
@@ -62,10 +59,7 @@ This is a project we created for our Blockchain class at UniBuc FMI.
 1. utilizarea unei librării web3 și conectarea cu un Web3 Provider pentru accesarea unor informații generale despre conturi (adresa, balance):
    - coming soon
 2. inițierea tranzacțiilor de transfer sau de apel de funcții, utilizând clase din librăriile web3:
-   - coming soon
-
-<br/>
-
+   - coming soon <br/>
 #### Cerințe opționale:
 1. tratarea de events (Observer Pattern):
    - coming soon
