@@ -36,21 +36,27 @@ contract VotingSystem {
 
     function vote(uint candidateId) external {
         require(!voters[msg.sender], "Already voted");
-        require(!isCandidate[msg.sender], "Candidates cannot vote");
-        require(candidateId > 0 && candidateId <= candidatesCount, "Invalid candidate ID");
+        require(
+            candidateId > 0 && candidateId <= candidatesCount,
+            "Invalid candidate ID"
+        );
 
         voters[msg.sender] = true;
         candidates[candidateId].voteCount++;
         emit Voted(msg.sender, candidateId);
     }
 
-    function getCandidate(uint candidateId) external view returns (Candidate memory) {
-        require(candidateId > 0 && candidateId <= candidatesCount, "Invalid candidate ID");
+    function getCandidate(
+        uint candidateId
+    ) external view returns (Candidate memory) {
+        require(
+            candidateId > 0 && candidateId <= candidatesCount,
+            "Invalid candidate ID"
+        );
         return candidates[candidateId];
     }
 
     function getCandidatesCount() public view returns (uint) {
         return candidatesCount;
-    }   
-
+    }
 }
