@@ -1,6 +1,6 @@
 This is a project we created for our Blockchain class at UniBuc FMI.
 
-### Projct setup
+### Project setup
 1. download the Metamask extension for your browser of choice
 2. run `npm install` in the root folder, the /server folder and the /client folder
 3. go back to the root folder
