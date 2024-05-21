@@ -13,9 +13,7 @@ contract VotingHelper {
     function getVoteCountForCandidate(
         uint candidateId
     ) public view returns (uint) {
-        VotingSystem.Candidate memory candidate = votingSystem.getCandidate(
-            candidateId
-        );
-        return candidate.voteCount;
+        (, uint voteCount) = votingSystem.getCandidate(candidateId);
+        return voteCount;
     }
 }

@@ -6,7 +6,7 @@ const buildDir = path.join(serverDir, 'build/contracts');
 
 // sterge continutul din server/build/contracts
 shell.rm('-rf', buildDir);
-console.log('The content of server/build/contracts has been deleted');
+console.log('The contents of server/build/contracts have been deleted');
 
 // seteaza directorul curent de lucru la folderul /server
 const options = { cwd: serverDir };

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from './AppContext';
 import getWeb3 from './getWeb3';
-import getVotingSystemInstance from './getVotingSystemInstance';
 import VotingSystem from './contracts/VotingSystem.json';
 
 const VotingComponent = () => {
@@ -11,6 +10,7 @@ const VotingComponent = () => {
   const [votingSystem, setVotingSystem] = useState(null);
   const [web3, setWeb3] = useState(null);
   const [selectedCandidateId, setSelectedCandidateId] = useState('');
+  const [donationAmount, setDonationAmount] = useState('');
 
   useEffect(() => {
     const init = async () => {
@@ -48,13 +48,16 @@ const VotingComponent = () => {
 
   const loadCandidates = async (votingSystemInstance) => {
     try {
-      const candidatesCount = await votingSystemInstance.methods.candidatesCount().call();
+      const candidatesCount = await votingSystemInstance.methods.getCandidatesCount().call();
       const candidates = [];
       for (let i = 1; i <= candidatesCount; i++) {
         const candidate = await votingSystemInstance.methods.candidates(i).call();
+        const votePercentage = await votingSystemInstance.methods.getVotePercentage(i).call();
         candidates.push({
           id: candidate.id.toString(),
-          name: candidate.name
+          name: candidate.name,
+          voteCount: candidate.voteCount,
+          votePercentage: votePercentage
         });
       }
       setCandidates(candidates);
@@ -75,8 +78,8 @@ const VotingComponent = () => {
     try {
       await votingSystem.methods.addCandidate(name).send({
         from: account,
-        gasLimit: web3.utils.toHex(2100000), // adjust based on your contract's needs
-        gasPrice: web3.utils.toHex(web3.utils.toWei('0.00001', 'gwei')) // set a very low gas price
+        gasLimit: web3.utils.toHex(2100000),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('0.00001', 'gwei'))
       });
       console.log('Candidate added successfully!');
       setNewCandidateName(''); // clear the candidate input field after successful addition
@@ -96,8 +99,8 @@ const VotingComponent = () => {
     try {
       await votingSystem.methods.vote(candidateId).send({
         from: account,
-        gasLimit: web3.utils.toHex(300000), // adjust the gas limit as needed
-        gasPrice: web3.utils.toHex(web3.utils.toWei('0.00001', 'gwei')) // adjust the gas price as needed
+        gasLimit: web3.utils.toHex(300000),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('0.00001', 'gwei'))
       });
       console.log('Vote cast successfully!');
       await loadCandidates(votingSystem); // reload candidates to refresh any state change
@@ -107,13 +110,32 @@ const VotingComponent = () => {
     }
   };
 
+  const donate = async () => {
+    if (!votingSystem || !account) {
+      console.error('Contract instance or account not available.');
+      return;
+    }
+
+    try {
+      await votingSystem.methods.donate().send({
+        from: account,
+        value: web3.utils.toWei(donationAmount, 'ether')
+      });
+      console.log('Donated successfully!');
+      setDonationAmount(''); // clear the donation input field after successful donation
+    } catch (error) {
+      console.error('Donation error:', error);
+      alert('Failed to donate. Check console for details.');
+    }
+  };
+
   return (
     <div>
       <h1>Candidates List</h1>
       <select value={selectedCandidateId} onChange={e => setSelectedCandidateId(e.target.value)}>
         {candidates.map(candidate => (
           <option key={candidate.id} value={candidate.id}>
-            {candidate.name}
+            {candidate.name} - {candidate.voteCount.toString()} votes ({candidate.votePercentage.toString()}%)
           </option>
         ))}
       </select>
@@ -126,6 +148,14 @@ const VotingComponent = () => {
         placeholder="Candidate Name"
       />
       <button onClick={() => addCandidate(newCandidateName)} disabled={!votingSystem || !newCandidateName.trim()}>Add Candidate</button>
+      <h1>Support the voting system</h1>
+      <input
+        type="text"
+        value={donationAmount}
+        onChange={e => setDonationAmount(e.target.value)}
+        placeholder="Amount in Ether"
+      />
+      <button onClick={donate} disabled={!votingSystem || !donationAmount.trim()}>Donate</button>
     </div>
   );
 };
