@@ -1,11 +1,11 @@
 This is a project we created for our Blockchain class at UniBuc FMI.
 
-### Project setup
+## Project setup
 1. download the Metamask extension for your browser of choice
 2. run `npm install` in the root folder, the /server folder and the /client folder
 3. go back to the root folder
 
-### Running the project
+## Running the project
 1. in a new terminal, run `npm run g`
 2. in a new terminal, run `npm run s`
 3. in a new terminal, run `npm run c`
@@ -17,8 +17,8 @@ This is a project we created for our Blockchain class at UniBuc FMI.
 9. paste that key in the "Enter your private key string here:" field
 10. for any action (login, add candidate, vote, etc), connect or authorize the action with Metamask whenever the popup appears
 
-### Implementarea cerințelor
-#### Partea 1: Implementarea smart-contractelor.
+## Implementarea cerințelor
+### Partea 1: Implementarea smart-contractelor.
 Cerințe obligatorii:
 1. utilizarea tipurilor de date specifice Solidity (mappings, address):
    - am utilizat `mapping` pentru a stoca candidații și votanții
@@ -54,7 +54,7 @@ Cerințe opționale:
 6. utilizarea altor platforme de stocare descentralizată (exemplu: IPFS):
    - lipsește
 
-#### Partea 2: Interacțiunea cu blockchain-ul printr-o aplicație web3.
+### Partea 2: Interacțiunea cu blockchain-ul printr-o aplicație web3.
 Cerințe obligatorii:
 1. utilizarea unei librării web3 și conectarea cu un Web3 Provider pentru accesarea unor informații generale despre conturi (adresa, balance):
    - coming soon
