@@ -16,3 +16,6 @@ shell.exec('truffle compile', options);
 
 // migreaza contractele
 shell.exec('truffle migrate --reset', options);
+
+// testeaza contractele
+shell.exec('truffle test', options);

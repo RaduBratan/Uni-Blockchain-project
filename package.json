@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "ganache": "node run-ganache.js",
-    "server": "node run-server.js",
-    "client": "node run-client.js"
+    "g": "node run-ganache.js",
+    "s": "node run-server.js",
+    "c": "node run-client.js"
   },
   "dependencies": {
     "fs-extra": "^11.2.0",
