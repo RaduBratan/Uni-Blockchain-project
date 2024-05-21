@@ -19,7 +19,7 @@ This is a project we created for our Blockchain class at UniBuc FMI.
 
 ## Implementarea cerințelor
 ### Partea 1: Implementarea smart-contractelor.
-Cerințe obligatorii:
+#### Cerințe obligatorii:
 1. utilizarea tipurilor de date specifice Solidity (mappings, address):
    - am utilizat `mapping` pentru a stoca candidații și votanții
    - tipul `address` este folosit pentru a identifica proprietarul contractului și pentru a verifica drepturile de acces
@@ -38,9 +38,10 @@ Cerințe obligatorii:
    - contractul `VotingHelper` interacționează cu `VotingSystem` pentru a obține numărul de voturi pentru un candidat
 7. deploy pe o rețea locală sau pe o rețea de test Ethereum:
    - am configurat `truffle-config.js` pentru deploy pe rețeaua locală și pe Ropsten
+
 <br/>
 
-Cerințe opționale:
+#### Cerințe opționale:
 1. utilizare librării:
    - lipsește
 2. implementarea de teste (cu tool-uri la alegere):
@@ -54,15 +55,18 @@ Cerințe opționale:
 6. utilizarea altor platforme de stocare descentralizată (exemplu: IPFS):
    - lipsește
 
+<br/>
+
 ### Partea 2: Interacțiunea cu blockchain-ul printr-o aplicație web3.
-Cerințe obligatorii:
+#### Cerințe obligatorii:
 1. utilizarea unei librării web3 și conectarea cu un Web3 Provider pentru accesarea unor informații generale despre conturi (adresa, balance):
    - coming soon
 2. inițierea tranzacțiilor de transfer sau de apel de funcții, utilizând clase din librăriile web3:
    - coming soon
+
 <br/>
 
-Cerințe opționale:
+#### Cerințe opționale:
 1. tratarea de events (Observer Pattern):
    - coming soon
 2. analiza gas-cost (estimare cost și fixare limită de cost):
