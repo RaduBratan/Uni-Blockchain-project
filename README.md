@@ -38,6 +38,8 @@ Cerințe obligatorii:
    - contractul `VotingHelper` interacționează cu `VotingSystem` pentru a obține numărul de voturi pentru un candidat
 7. deploy pe o rețea locală sau pe o rețea de test Ethereum:
    - am configurat `truffle-config.js` pentru deploy pe rețeaua locală și pe Ropsten
+<br/>
+
 Cerințe opționale:
 1. utilizare librării:
    - lipsește
@@ -58,6 +60,8 @@ Cerințe obligatorii:
    - coming soon
 2. inițierea tranzacțiilor de transfer sau de apel de funcții, utilizând clase din librăriile web3:
    - coming soon
+<br/>
+
 Cerințe opționale:
 1. tratarea de events (Observer Pattern):
    - coming soon
