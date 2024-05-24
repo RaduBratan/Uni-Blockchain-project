@@ -27,7 +27,7 @@ To retrieve the donations made towards the VotingSystem and transfer them in one
 6. if you followed 5, also run `console.log(web3.utils.fromWei(balance, 'ether'))` to check that, indeed, VotingSystem has 0 funds (although you can also connect to the ganache-cli account using Metamask to check if the funds were transferred successfully)
 
 ## Implementarea cerințelor
-### Partea 1: Implementarea smart-contractelor.
+### Partea 1: Implementarea smart-contractelor
 #### Cerințe obligatorii:
 1. utilizarea tipurilor de date specifice Solidity (mappings, address):
    - am utilizat `mapping` pentru a stoca candidații și votanții
@@ -62,9 +62,10 @@ To retrieve the donations made towards the VotingSystem and transfer them in one
    - lipsește
 6. utilizarea altor platforme de stocare descentralizată (exemplu: IPFS):
    - lipsește <br/>
-### Partea 2: Interacțiunea cu blockchain-ul printr-o aplicație web3.
+### Partea 2: Interacțiunea cu blockchain-ul printr-o aplicație web3
 #### Cerințe obligatorii:
 1. utilizarea unei librării web3 și conectarea cu un Web3 Provider pentru accesarea unor informații generale despre conturi (adresa, balance):
+   - librăria web3 utilizată este `web3.js`
    - conectarea cu un Web3 Provider este realizată prin `window.ethereum` în `getWeb3.js`
 2. inițierea tranzacțiilor de transfer sau de apel de funcții, utilizând clase din librăriile web3:
    - tranzacțiile sunt inițiate folosind metodele contractelor inteligente (`vote`, `addCandidate`, `donate`) prin intermediul instanței contractului creat cu `web3.eth.Contract` <br/>

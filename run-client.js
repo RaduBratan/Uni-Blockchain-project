@@ -8,7 +8,7 @@ const contractsDestDir = path.join(__dirname, 'client/src/contracts');
 
 // copiaza contractele compilate in folderul client
 fs.copySync(buildDir, contractsDestDir);
-console.log('The contracts have been copied to the client folder');
+console.log('The contracts have been copied to the client folder.');
 
 // seteaza directorul curent de lucru la folderul /client
 const options = { cwd: clientDir };
